@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html lang="en">
+    <head>
+        <title>OrderSheet</title>
+        <meta charset="utf-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <link rel="stylesheet"
+              href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+        <script
+        src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+        <script
+        src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+    </head>
+    <body>
+      <div class="container">
+<form id="ordForm" method="post">
+<div class="form-group">
+<span><label for="pid">Product ID:</label> <label id="pidMsg">
+</label></span>
+<input type="text" class="form-control" name="empId" id="pid"
+placeholder="Enter Product ID" required>
+</div>
+<div class="form-group">
+<label for="pname">Product Name:</label>
+<input type="text" class="form-control" id="pname"
+placeholder="Enter Product Name" name="pname">
+</div>
+<div class="form-group">
+<label for="pnos">Quantity:</label>
+<input type="text" class="form-control" id="pnos"
+placeholder="Enter Product Quantity" name="pnos">
+</div>
+<div class="form-group">
+<label for="dadd">Delivery Address:</label>
+<input type="text" class="form-control" id="dadd"
+placeholder="Enter Address" name="dadd">
+</div>
+<input type="button" class="btn btn-primary" id="ordSave" value="Save"
+onclick="saveOrder();">
+</form>
+</div>
+        <script>
+            function validateAndGetFormData() {
+            var pidVar = $("#pid").val();
+                    if (pidVar === "") {
+            alert("Product Id Required Value");
+                    $("#pid").focus();
+                    return "";
+                    }
+            var pnameVar = $("#pname").val();
+                    if (pnameVar === "") {
+            alert("Product Name is Required Value");
+                    $("#pname").focus();
+                    return "";
+                    }
+            var pnosVar = $("#pnos").val();
+                    if (pnosVar === "") {
+            alert("Quantity is Required Value");
+                    $("#pnos").focus();
+                    return "";
+                }
+                    var daddVar = $("#dadd").val();
+                    if (daddVar === "") {
+            alert("Address is Required Value");
+                    $("#dadd").focus();
+                    return "";
+                    }
+            var jsonStrObj = {
+            pid: pidVar,
+                    pname: pnameVar,
+                    pnos: pnosVar,
+                    dadd:daddVar,
+                    };
+                    return JSON.stringify(jsonStrObj);
+                    }
+            function resetForm() {
+            $("#pid").val("");
+                    $("#pname").val("");
+                    $("#pnos").val("");
+                    $("#dadd").val("");
+                    $("#pid").focus();
+                    }
+            function saveOrder() {
+            var jsonStr = validateAndGetFormData();
+                    if (jsonStr === "") {
+            return;
+                    }
+            var putReqStr = createPUTRequest("90935435|-31948797801414870|90931939",
+                    jsonStr, "Ecomerce", "Ord-Rel");
+                    alert(putReqStr);
+                    jQuery.ajaxSetup({async: false});
+                    var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
+                            "http://api.login2explore.com:5577", "/api/iml");
+                    alert(JSON.stringify(resultObj));
+                    jQuery.ajaxSetup({async: true});
+                    resetForm();
+                    }
+        </script>
+    </body>
+</html>
