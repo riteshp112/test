@@ -15,7 +15,7 @@ and open the template in the editor.
         src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
         <script
         src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
-        <script src="http://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
+        <script src="https://login2explore.com/jpdb/resources/js/0.0.3/jpdb-commons.js"></script>
     </head>
     <body>
       <div class="container">
@@ -96,7 +96,7 @@ onclick="saveOrder();">
                     alert(putReqStr);
                     jQuery.ajaxSetup({async: false});
                     var resultObj = executeCommandAtGivenBaseUrl(putReqStr,
-                            "http://api.login2explore.com:5577", "/api/iml");
+                            "https://api.login2explore.com:5577", "/api/iml");
                     alert(JSON.stringify(resultObj));
                     jQuery.ajaxSetup({async: true});
                     resetForm();
